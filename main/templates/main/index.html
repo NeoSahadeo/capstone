@@ -1,1 +1,20 @@
 {% extends "base.html" %}
+
+{% block content %}
+{% if preferredMode == 'Week Mode' %}
+<div id="content" class="flex flex-col items-center">
+    <div id="currentContentHeader" class="max-w-min text-white text-2xl" style="padding: 30px;">{{ current }}</div>
+    <ul>
+    </ul>
+</div>
+{% else %}
+{% endif %}
+{% endblock %}
+{% block foot %}
+    {% if preferredMode == 'Week Mode' %}
+    <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
+        <input id="displayContentSliderWeekMode" type="range" min="0" max="6" value="{{ index }}" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer">
+    </span>
+    {% else %}
+    {% endif %}
+{% endblock %}

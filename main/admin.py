@@ -1,3 +1,11 @@
 from django.contrib import admin
+from .models import User, WeeklyTask
 
-# Register your models here.
+# class UserAdmin(admin.ModelAdmin):
+#     pass
+
+# class WeeklyTasksAdmin(admin.ModelAdmin):
+#     pass
+
+admin.site.register(User)
+admin.site.register(WeeklyTask)
