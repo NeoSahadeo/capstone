@@ -11,4 +11,6 @@ class WeeklyTask(models.Model):
     date_time = models.DateTimeField(default=None)
     color = models.CharField(max_length=16, default="#%06x" % random.randint(0, 0xFFFFFF))
 
+    def __str__(self):
+        return self.taskname
     

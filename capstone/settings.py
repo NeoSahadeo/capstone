@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'tailwind',
     'theme',
+    'django_unicorn',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,5 +1,5 @@
 {% load static tailwind_tags %}
-
+{% load unicorn %}
 <!DOCTYPE html>
    <head>
       <meta charset="UTF-8">
@@ -8,6 +8,7 @@
       {% tailwind_css %}
    </head>
    <body class="flex flex-col h-screen w-screen" style="background-color: #131313;font-family: 'DM Sans';">
+      {% csrf_token %}
       <header class="w-screen flex justify-between items-center" style="background-color: #181818; height: 60px;">
          <button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
             Menu

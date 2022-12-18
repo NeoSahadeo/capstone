@@ -5,6 +5,9 @@
 <div id="content" class="flex flex-col items-center">
     <div id="currentContentHeader" class="max-w-min text-white text-2xl" style="padding: 30px;">{{ current }}</div>
     <ul>
+        {% for task in daytasks %} -->
+            <div>{{ task.taskname }}</div>
+        {% endfor %}
     </ul>
 </div>
 {% else %}
