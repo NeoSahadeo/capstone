@@ -24,8 +24,8 @@ def index(request):
         return render(request, 'main/index.html',{
             'preferredMode': 'Week Mode',
             'current': odaylookup[dayIndex],
-            'index': dayIndex,
-            'daytasks': daytasks
+            # 'index': dayIndex,
+            # 'daytasks': daytasks
         })
 
 def selectcontentweek(request):

@@ -1,0 +1,8 @@
+{% load unicorn %}
+<div>
+    {% unicorn 'filter' parent=view %}
+    {% unicorn_scripts %}    
+    <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
+        <input unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" oninput="dayupdate(this)" id="displayContentSliderWeekMode" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer">
+    </span>
+</div>
