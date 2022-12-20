@@ -1,6 +1,14 @@
 {% load unicorn %}
 <div class="flex flex-col h-full">
-    {% unicorn 'content' parent=view %}
+    <div id="content" class="flex flex-col items-center">
+        {% unicorn_scripts %}
+        <div id="currentContentHeader" class="max-w-min text-white text-2xl" style="padding: 30px;">{{ current }}</div>
+        <div class="text-white">
+            {% for task in daytasks %}
+                <div>{{ task.taskname|title }}</div>
+            {% endfor %}
+        </div>
+    </div>
     {% unicorn_scripts %}
     <div class="flex flex-row items-end justify-end mt-auto">{% unicorn 'addtask' parent=view %}</div>
     <footer class="flex justify-center items-center w-screen" style="height: 59px;background-color: #1A1A1A;">

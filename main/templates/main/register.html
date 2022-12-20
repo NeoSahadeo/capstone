@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block unicorn %}
+<form class="flex flex-col bg-white">
+    {% csrf_token %}
+    {{ form }}
+</form>
+{% endblock %}

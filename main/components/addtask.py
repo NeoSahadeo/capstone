@@ -1,8 +1,16 @@
-from datetime import date, timedelta
+from django import forms
+from django.core import serializers
 from django_unicorn.components import UnicornView
-from ..models import WeeklyTask
 from .showtasksweekly import referredValue
-from django.shortcuts import render
+
+class GenerateForm(forms.Form):
+    title = forms.CharField(required=True)
+    
+    def serialize(self):
+        return {
+            'title': self.title
+        }  
 
 class AddtaskView(UnicornView):
     referredValue = referredValue
+    

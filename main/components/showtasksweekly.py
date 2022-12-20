@@ -32,3 +32,6 @@ class ShowtasksweeklyView(UnicornView):
         self.value = self.value
         self.daytasks = daytasks
         self.current = odaylookup[int(self.value)]
+
+    def mount(self):
+        ShowtasksweeklyView.dayupdate(self)
