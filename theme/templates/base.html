@@ -29,12 +29,8 @@
             </button>
          {% endif %}
       </header>
-      {% block content %}
+      {% block unicorn %}
       {% endblock %}
-      <footer class="flex justify-center items-center w-screen mt-auto" style="height: 59px;background-color: #1A1A1A;">
-         {% block foot %}
-         {% endblock %}
-      </footer>
       <script src="{% static 'jquery-3.6.2.min.js' %}"></script>
       <script src="{% static 'sliderControls.js' %}"></script>
    </body>

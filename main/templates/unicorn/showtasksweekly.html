@@ -1,8 +1,14 @@
 {% load unicorn %}
-<div>
-    {% unicorn 'filter' parent=view %}
-    {% unicorn_scripts %}    
-    <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
-        <input unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" oninput="dayupdate(this)" id="displayContentSliderWeekMode" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer">
-    </span>
+<div class="flex flex-col h-full">
+    {% unicorn 'content' parent=view %}
+    {% unicorn_scripts %}
+    <div class="flex flex-row items-end justify-end mt-auto">{% unicorn 'addtask' parent=view %}</div>
+    <footer class="flex justify-center items-center w-screen" style="height: 59px;background-color: #1A1A1A;">
+        <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
+            <input id="slider_input" unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer">
+            <div id="activateList" style="display: none !important;" unicorn:click="dayupdate">
+            </div>
+        </span>
+    </footer>
 </div>
+

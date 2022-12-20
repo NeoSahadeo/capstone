@@ -3,12 +3,7 @@
 
 {% csrf_token %}
 {% if preferredMode == 'Week Mode' %}
-{% unicorn 'showtasksweekly' %}
-    {% block content %}
-    <div id="content" class="flex flex-col items-center">
-        <div id="currentContentHeader" class="max-w-min text-white text-2xl" style="padding: 30px;">{{ current }}</div>00
-    </div>
-    {% endblock %}
-    {% block foot %}
+    {% block unicorn %}
+        {% unicorn 'showtasksweekly' %}
     {% endblock %}
 {% endif %}
