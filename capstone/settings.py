@@ -138,3 +138,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Windows Default NPM executalbe path
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
