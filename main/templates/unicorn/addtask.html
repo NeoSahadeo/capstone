@@ -1,6 +1,14 @@
 {% load unicorn %}
 <div>
-    <!-- <button unicorn:click="generateForm" unicorn:model="referredValue" class="bg-white p-2 m-4 rounded-full">Add</button> -->
-    <input unicorn:model="title" type="text" id="title">
-    <button unicorn:click="submit">Validate</button>
+    {% if display %}
+        <div class="absolute w-screen h-screen top-0 left-0" style="background-color: black;">
+            <form onsubmit="">
+                {% csrf_token %}
+                <input unicorn:model="title" type="text" id="title">
+                <button>Validate</button>
+            </form>
+            <button unicorn:click="$toggle('display')" class="bg-white p-2 m-4 rounded-full">X</button>
+        </div>
+    {% endif %}
+    <button unicorn:click="$toggle('display')" class="bg-white p-2 m-4 rounded-full">+</button>
 </div>
