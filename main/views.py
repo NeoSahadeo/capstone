@@ -1,10 +1,11 @@
+import datetime
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
 from django.db import IntegrityError
-from django.http import HttpResponseRedirect 
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse
-from .models import User
+from .models import User, WeeklyTask
 from .forms import RegisterForm, LoginForm
 
 def index(request):
@@ -80,3 +81,18 @@ def login(request):
 def logout(request):
     logout_auth(request)
     return HttpResponseRedirect(reverse("main:index"))
+
+def createtask(request):
+    if request.method == 'POST':
+        taskname = request.POST['body[taskname]']
+        color = request.POST['body[color]']
+        date_time = request.POST['body[date_time]']
+        print(taskname,color,date_time)
+        newtask = WeeklyTask(
+            user_id = User.objects.get(id=request.user.id),
+            taskname = taskname,
+            date_time = datetime.datetime.today(),
+            color = color
+        )
+        newtask.save()
+    return HttpResponse('')
