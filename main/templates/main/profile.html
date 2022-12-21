@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block header %}
+<button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
+    Menu
+</button>
+<a href="/">
+Home
+</a>
+<a href="logout" class="text-blue-500 underline pr-3">Logout</a>
+{% endblock %}
+
+{% block unicorn %}
+<div class="flex flex-col w-full items-center pt-4">
+    <h1 class="text-4xl text-white">Hey, {{ userinfo.username }}!</h1>
+    <div class="w-48 h-48 bg-white rounded-full mt-8"></div>
+</div>
+<form class="flex flex-col w-full items-center px-6 md:px-60 mt-5">
+    {% csrf_token %}
+    <div class="flex flex-row border-2 w-full items-center m-3 rounded-lg">
+        <label class="text-white pl-2 pr-2 w-2/3">Email:</label>
+        <input class="bg-white text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.email }}" disabled/>
+    </div>
+    <div class="flex flex-row border-2 w-full items-center m-1 rounded-lg">
+        <label class="text-white pl-2 pr-2 w-2/3">Username:</label>
+        <input class="bg-white text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.username }}" />
+    </div>
+    <button tpye="submit" class="uppercase bg-green-400 px-3 py-1.5 text-center rounded-sm mt-auto ml-auto">save</button>
+</form>
+{% endblock %}

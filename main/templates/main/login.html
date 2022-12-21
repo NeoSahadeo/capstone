@@ -1,1 +1,20 @@
 {% extends "base.html" %}
+
+{% block header %}
+<button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
+    Menu
+</button>
+<div class="mr-4">
+    <label class="text-white">Don't have an Account?</label>
+    <a href="register" class="text-blue-500 underline" >Register</a>
+</div>
+{% endblock %}
+
+{% block unicorn %}
+<span class="text-white">{{ message }}</span>
+<form class="flex flex-col bg-white" method="post" action="{% url 'main:login' %}">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit" name="register" class="border-2 border-gray-300 bg-white">Login</button>
+</form>
+{% endblock %}

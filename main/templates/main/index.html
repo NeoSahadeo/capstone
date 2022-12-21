@@ -9,9 +9,9 @@
 {% endif %}
 
 {% block header %}
-<button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
-    Menu
- </button>
+<button type="button" aria-label="Menu" aria-controls="navigation"> 
+   Menu
+</button>
  <div class="relative inline-block text-left">
        <div>
        <button type="button" class="flex items-center w-full text-white text-xs rounded-md px-3 py-2 text-sm font-bold" id="menu-button" style="background-color: #111111;" aria-expanded="true" aria-haspopup="true"><span>{{ preferredMode }}</span>
@@ -22,8 +22,8 @@
        </div>
  </div>
 {% if user.is_authenticated %}
-<button class="rounded-full bg-white" style="width: 35px; height: 35px; margin: 21px 22px;">
-</button>
+<a href="profile" class="rounded-full bg-white" style="width: 35px; height: 35px; margin: 21px 22px;">
+</a>
 {% else %}
 <button class="text-blue-500 underline">
    <a href="register">Sign Up</a>/ <a href="login">Sign In</a>

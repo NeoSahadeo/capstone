@@ -1,8 +1,20 @@
 {% extends "base.html" %}
 
+{% block header %}
+<button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
+    Menu
+</button>
+<div class="mr-4">
+    <label class="text-white">Already Have an Account?</label>
+    <a href="login" class="text-blue-500 underline" >Login</a>
+</div>
+{% endblock %}
+
 {% block unicorn %}
-<form class="flex flex-col bg-white">
+<span class="text-white">{{ message }}</span>
+<form class="flex flex-col bg-white" method="post" action="{% url 'main:register' %}">
     {% csrf_token %}
     {{ form }}
+    <button type="submit" name="register" class="border-2 border-gray-300 bg-white">Register</button>
 </form>
 {% endblock %}

@@ -9,3 +9,4 @@ from .models import User, WeeklyTask
 
 admin.site.register(User)
 admin.site.register(WeeklyTask)
+# admin.site.register()
