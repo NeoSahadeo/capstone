@@ -1,4 +1,6 @@
 {% load unicorn %}
 <div>
-    <button unicorn:click="generateForm" unicorn:model="referredValue" class="bg-white p-2 m-4 rounded-full">Add</button>
+    <!-- <button unicorn:click="generateForm" unicorn:model="referredValue" class="bg-white p-2 m-4 rounded-full">Add</button> -->
+    <input unicorn:model="title" type="text" id="title">
+    <button unicorn:click="submit">Validate</button>
 </div>
