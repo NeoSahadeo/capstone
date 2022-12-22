@@ -10,9 +10,9 @@ function saveTask(element){
                 'date_time': form.date_time,
                 'color': form.color 
             }
+        },
+        success: ()=>{
+            console.log('saved')
         }
-    },
-    function(data,status){
-    }
-    )
+    })
 }

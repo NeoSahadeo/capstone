@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from django.forms import ModelForm
 from django_unicorn.components import UnicornView
 from ..models import WeeklyTask
 
@@ -14,13 +15,20 @@ odaylookup = {
     5: 'Saturday',
     6: 'Sunday',
 }
-referredValue = {
-    'value': 0,
-}
+class AddTaskForm(ModelForm):
+    class Meta:
+        model = WeeklyTask
+        fields = ['taskname','date_time','color']
+
 class ShowtasksweeklyView(UnicornView):
+    form = str(AddTaskForm())
+    display = False
+
     current = odaylookup[dayIndex]
     value = dayIndex
-    daytasks = ''
+    daytasks = None
+    showtasks = True
+    showtasks_polling = True
 
     def dayupdate(self):
         # 'weight' describes the 'displacement'/vector from the current day to
@@ -28,10 +36,13 @@ class ShowtasksweeklyView(UnicornView):
         weight = today - timedelta(days=int(dayIndex)-int(self.value))
         daytasks = WeeklyTask.objects.filter(user_id=self.request.user.id, date_time__day=weight.day, date_time__month=weight.month, date_time__year=weight.year).order_by('-date_time').values()
 
-        referredValue['value'] = self.value
         self.value = self.value
         self.daytasks = daytasks
         self.current = odaylookup[int(self.value)]
 
     def mount(self):
         ShowtasksweeklyView.dayupdate(self)
+
+    def updated(self, name, value):
+        if name == 'display':
+            ShowtasksweeklyView.dayupdate(self)

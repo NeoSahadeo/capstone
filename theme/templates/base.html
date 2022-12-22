@@ -3,9 +3,20 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+         ::-webkit-slider-thumb{
+            -webkit-appearance: none; /* Override default look */
+            appearance: none;
+            background: #7E7E7E !important;
+            height: 27px;
+            width: 13px;  
+            border-radius: 10px;
+         }
+         
+      </style>
       {% tailwind_css %}
    </head>
-   <body class="flex flex-col h-screen w-screen" style="background-color: #131313;font-family: 'DM Sans';">
+   <body class="flex flex-col h-screen w-screen max-h-screen max-w-screen text-white" style="background-color: #131313;font-family: 'DM Sans';">
       <header class="w-screen flex justify-between items-center" style="background-color: #181818; height: 60px;">
          {% block header %}
          {% endblock %}

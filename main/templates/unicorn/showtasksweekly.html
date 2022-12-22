@@ -1,25 +1,55 @@
+{% load static %}
 {% load unicorn %}
-<div class="flex flex-col h-full">
-    <div id="content" class="flex flex-col items-center">
+<div unicorn:poll="dayupdate" unicorn:poll.disable="showtasks_polling" class="flex flex-col h-full">
+    <style>
+        input {
+            color: black;
+        }
+    </style>
+    <div id="content" class="flex flex-col">
         {% unicorn_scripts %}
-        <div id="currentContentHeader" class="max-w-min text-white text-2xl" style="padding: 30px;">{{ current }}</div>
-        <div class="text-white">
-            {% for task in daytasks %}
-                <div class="flex flex-row">
-                    <div class="h-l2 w-12" style="background-color: {{ task.color }};"></div>
-                    {{ task.taskname|title }} &nbsp; {{ task.date_time }} 
+        <div class="px-3">
+            <div id="currentContentHeader" class="max-w-min text-white text-2xl mx-auto" style="padding: 30px;">{{ current }}</div>
+            {% if showtasks %}
+                <div id="tasks-id" class="text-white">
+                    {% for task in daytasks %}
+                        <div class="flex flex-row items-center rounded-sm cursor-pointer" style="height: 60px; background-color: #1C1C1C; padding-left: 14px; min-width: 337px; margin-bottom: 17px;">
+                            <div class="flex flex-row items-center w-full">
+                                <div class="flex flex-row items-center rounded-sm" style="background-color: #333333; height: 30px; width: 100%; max-width: 89px; margin-right: 7px;">
+                                    <div class="w-2 h-full rounded-tl-sm rounded-bl-sm" style="background-color: {{ task.color }};"></div>
+                                    <div class="w-full" style="font-size: 22px; padding-left: 8.59px;">{{ task.date_time|time:"G:i" }}</div>
+                                </div>
+                                <div class="text-center mt-auto mb-auto h-auto">
+                                    -&nbsp;{{ task.taskname|title }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            {% endif %}
+            {% if display %}
+                <div class="absolute w-screen h-screen top-0 left-0" style="background-color:#131313;">
+                    <form onsubmit="saveTask(this);return false" class="flex flex-col text-white max-w-min">
+                        {% csrf_token %}
+                        {{ form|safe }}
+                        <button type="submit" unicorn:click="$toggle('display', 'showtasks')" class="border-2 border-gray-300 rounded-lg bg-white w-16 text-black">Add Task</button>
+                    </form>
+                    <button unicorn:click="$toggle('display', 'showtasks')" class="bg-white p-2 m-4 rounded-full">X</button>
+                </div>
+            {% endif %}
         </div>
+        {% if showtasks %}
+                <button unicorn:click="$toggle('display', 'showtasks')" class="flex justify-center items-center rounded-full fixed right-0" style="background-color: #181818;width: 49px; height: 49px; margin: 22px; bottom: 81px;">
+                    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.25 17C4.25 16.2176 4.88426 15.5833 5.66667 15.5833H28.3333C29.1157 15.5833 29.75 16.2176 29.75 17C29.75 17.7824 29.1157 18.4167 28.3333 18.4167H5.66667C4.88426 18.4167 4.25 17.7824 4.25 17Z" fill="white"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M17 4.25C17.7824 4.25 18.4167 4.88426 18.4167 5.66667L18.4167 28.3333C18.4167 29.1157 17.7824 29.75 17 29.75C16.2176 29.75 15.5833 29.1157 15.5833 28.3333L15.5833 5.66667C15.5833 4.88426 16.2176 4.25 17 4.25Z" fill="white"/>
+                    </svg>                
+                </button>
+                <footer class="flex justify-center items-center w-screen fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
+                    <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
+                        <input id="slider_input" unicorn:key="slider_key" unicorn:partial="tasks-id, currentContentHeader" unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none">
+                    </span>
+                </footer>
+        {% endif %}
     </div>
-    {% unicorn_scripts %}
-    <div class="flex flex-row items-end justify-end mt-auto">{% unicorn 'addtask' parent=view %}</div>
-    <footer class="flex justify-center items-center w-screen" style="height: 59px;background-color: #1A1A1A;">
-        <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
-            <input id="slider_input" unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer">
-            <div id="activateList" style="display: none !important;" unicorn:click="dayupdate">
-            </div>
-        </span>
-    </footer>
 </div>
-
