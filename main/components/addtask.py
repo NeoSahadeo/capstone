@@ -10,5 +10,5 @@ class AddTaskForm(ModelForm):
 
 class AddtaskView(UnicornView):
     form = str(AddTaskForm())
-    display = False
+    display = True
     

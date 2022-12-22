@@ -10,7 +10,7 @@
             <form onsubmit="saveTask(this);return false" class="flex flex-col text-white max-w-min">
                 {% csrf_token %}
                 {{ form|safe }}
-                <button type="submit" class="border-2 border-gray-300 rounded-lg bg-white w-16 text-black">Add Task</button>
+                <button type="submit" unicorn:click="$toggle('display')" class="border-2 border-gray-300 rounded-lg bg-white w-16 text-black">Add Task</button>
             </form>
             <button unicorn:click="$toggle('display')" class="bg-white p-2 m-4 rounded-full">X</button>
         </div>

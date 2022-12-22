@@ -5,7 +5,10 @@
         <div id="currentContentHeader" class="max-w-min text-white text-2xl" style="padding: 30px;">{{ current }}</div>
         <div class="text-white">
             {% for task in daytasks %}
-                <div>{{ task.taskname|title }}</div>
+                <div class="flex flex-row">
+                    <div class="h-l2 w-12" style="background-color: {{ task.color }};"></div>
+                    {{ task.taskname|title }} &nbsp; {{ task.date_time }} 
+                </div>
             {% endfor %}
         </div>
     </div>

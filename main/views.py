@@ -86,12 +86,11 @@ def createtask(request):
     if request.method == 'POST':
         taskname = request.POST['body[taskname]']
         color = request.POST['body[color]']
-        date_time = request.POST['body[date_time]']
-        print(taskname,color,date_time)
+        date_time = datetime.datetime.strptime(request.POST['body[date_time]'], '%Y %m %d %H %M')
         newtask = WeeklyTask(
             user_id = User.objects.get(id=request.user.id),
             taskname = taskname,
-            date_time = datetime.datetime.today(),
+            date_time = date_time,
             color = color
         )
         newtask.save()
