@@ -1,5 +1,4 @@
 from datetime import date, timedelta
-from django.forms import ModelForm
 from django_unicorn.components import UnicornView
 from ..models import WeeklyTask
 
@@ -15,20 +14,9 @@ odaylookup = {
     5: 'Saturday',
     6: 'Sunday',
 }
-class AddTaskForm(ModelForm):
-    class Meta:
-        model = WeeklyTask
-        fields = ['taskname','date_time','color']
-
-    def __init__(self, *args, **kwargs):
-        super(AddTaskForm, self).__init__(*args,**kwargs)
-        self.fields['taskname'].widget.attrs.update({
-            'style':'width: 100%; padding-left: 28px; padding-right: 22px; background-color: #1B1B1B;'
-            })
 
 class ShowtasksweeklyView(UnicornView):
-    form = str(AddTaskForm())
-    display = True
+    showform = True
 
     current = odaylookup[dayIndex]
     value = dayIndex
@@ -50,5 +38,5 @@ class ShowtasksweeklyView(UnicornView):
         ShowtasksweeklyView.dayupdate(self)
 
     def updated(self, name, value):
-        if name == 'display':
+        if name == 'showform':
             ShowtasksweeklyView.dayupdate(self)

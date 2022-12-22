@@ -12,7 +12,10 @@
             width: 13px;  
             border-radius: 10px;
          }
-         
+         html {
+            overflow: -moz-scrollbars-vertical; 
+            overflow-y: scroll;
+         }         
       </style>
       {% tailwind_css %}
    </head>
@@ -24,6 +27,7 @@
       {% block unicorn %}
       {% endblock %}
       <script src="{% static 'jquery-3.6.2.min.js' %}"></script>
+      <script src="{% static 'jquery-clock-timepicker.js' %}"></script>
       <script src="{% static 'script.js' %}"></script>
    </body>
 </html>

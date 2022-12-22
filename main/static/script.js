@@ -16,6 +16,12 @@ function saveTask(element){
         }
     })
 }
+$('.time').clockTimePicker({
+    modeSwitchSpeed: 10000,
+    i18n: {
+		cancelButton: 'Cancel'
+	}
+});
 // const findOverflows = () => {
 //     const documentWidth = document.documentElement.offsetWidth;
 
