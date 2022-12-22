@@ -20,14 +20,20 @@ class AddTaskForm(ModelForm):
         model = WeeklyTask
         fields = ['taskname','date_time','color']
 
+    def __init__(self, *args, **kwargs):
+        super(AddTaskForm, self).__init__(*args,**kwargs)
+        self.fields['taskname'].widget.attrs.update({
+            'style':'width: 100%; padding-left: 28px; padding-right: 22px; background-color: #1B1B1B;'
+            })
+
 class ShowtasksweeklyView(UnicornView):
     form = str(AddTaskForm())
-    display = False
+    display = True
 
     current = odaylookup[dayIndex]
     value = dayIndex
     daytasks = None
-    showtasks = True
+    showtasks = False
     showtasks_polling = True
 
     def dayupdate(self):

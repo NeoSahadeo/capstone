@@ -8,7 +8,7 @@
     </style>
     <div id="content" class="flex flex-col">
         {% unicorn_scripts %}
-        <div class="px-3">
+        <div class="px-3 pb-12">
             <div id="currentContentHeader" class="max-w-min text-white text-2xl mx-auto" style="padding: 30px;">{{ current }}</div>
             {% if showtasks %}
                 <div id="tasks-id" class="text-white">
@@ -28,13 +28,23 @@
                 </div>
             {% endif %}
             {% if display %}
-                <div class="absolute w-screen h-screen top-0 left-0" style="background-color:#131313;">
+                <div class="absolute w-full h-full top-0 left-0" style="background-color:#131313;">
+                    <header class="flex justify-between items-center" style="background-color: #181818; height: 60px;">
+                    </header>    
                     <form onsubmit="saveTask(this);return false" class="flex flex-col text-white max-w-min">
                         {% csrf_token %}
                         {{ form|safe }}
-                        <button type="submit" unicorn:click="$toggle('display', 'showtasks')" class="border-2 border-gray-300 rounded-lg bg-white w-16 text-black">Add Task</button>
+                        <footer class="flex flex-row justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
+                            <button type="submit" unicorn:click="$toggle('display', 'showtasks')" style="background-color: #368A34; width: 76px; height: 35px;" class="font-bold uppercase rounded-full">SAVE</button>
+                            <button unicorn:click="$toggle('display', 'showtasks')" style="background-color: #8E2121; margin-right: 13px; margin-bottom: 8px; margin-top: 8px; width: 42px; height: 42px; right: 0px;" class="absolute flex justify-center items-center text-black rounded-full">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M4 4C4 3.44772 4.44772 3 5 3H19C19.5523 3 20 3.44772 20 4C20 4.55228 19.5523 5 19 5H5C4.44772 5 4 4.55228 4 4Z" fill="white"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.92329 7.00293C6.47395 6.96057 6.95468 7.37263 6.99704 7.92329L7.78397 18.1534C7.86413 19.1954 8.73301 20 9.77808 20H14.2219C15.267 20 16.1358 19.1954 16.216 18.1534L17.0029 7.92329C17.0453 7.37263 17.526 6.96057 18.0767 7.00293C18.6273 7.04529 19.0394 7.52603 18.997 8.07668L18.2101 18.3068C18.0498 20.3908 16.312 22 14.2219 22H9.77808C7.68794 22 5.95017 20.3908 5.78986 18.3068L5.00293 8.07668C4.96057 7.52603 5.37263 7.04529 5.92329 7.00293Z" fill="white"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 4.15051C12.5784 4.69033 13.3463 4.99999 14.1552 4.99999L16 4.99999V2.99999L14.1552 2.99999C13.7679 2.99999 13.4061 2.8064 13.1913 2.4841C12.6246 1.63405 11.3754 1.63404 10.8087 2.4841C10.5939 2.8064 10.2321 2.99999 9.84479 2.99999L8 2.99999V4.99999L9.84479 4.99999C10.6537 4.99999 11.4216 4.69033 12 4.15051Z" fill="white"/>
+                                </svg>                                
+                            </button>
+                        </footer>    
                     </form>
-                    <button unicorn:click="$toggle('display', 'showtasks')" class="bg-white p-2 m-4 rounded-full">X</button>
                 </div>
             {% endif %}
         </div>
@@ -45,7 +55,7 @@
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M17 4.25C17.7824 4.25 18.4167 4.88426 18.4167 5.66667L18.4167 28.3333C18.4167 29.1157 17.7824 29.75 17 29.75C16.2176 29.75 15.5833 29.1157 15.5833 28.3333L15.5833 5.66667C15.5833 4.88426 16.2176 4.25 17 4.25Z" fill="white"/>
                     </svg>                
                 </button>
-                <footer class="flex justify-center items-center w-screen fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
+                <footer class="flex justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
                     <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
                         <input id="slider_input" unicorn:key="slider_key" unicorn:partial="tasks-id, currentContentHeader" unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none">
                     </span>
