@@ -4,7 +4,7 @@ function saveTask(element){
     time = ` ${$('#id_time').val().replace(':',' ')}`
     date_time = date.concat(time)
     form = Object.fromEntries(new FormData(element).entries())
-    
+    console.log(date_time)
     // $.ajax({
     //     url: 'createtask',
     //     type: 'POST',
@@ -21,14 +21,9 @@ function saveTask(element){
     //     }
     // })
 }
-$('.time').clockTimePicker({
-    modeSwitchSpeed: 10,
-    i18n: {
-		cancelButton: 'Cancel'
-	}
-});
-function showDatePicker(){
-    $( "#datepicker" ).datepicker()
+function initializePlugins(){
+    $('#datepicker').datepicker()
+    $('#id_time').clockTimePicker()
 }
 // const findOverflows = () => {
 //     const documentWidth = document.documentElement.offsetWidth;

@@ -41,4 +41,4 @@ class ShowtasksweeklyView(UnicornView):
         if name == 'showform':
             ShowtasksweeklyView.dayupdate(self)
         if name == 'showform' and value == True:
-            self.call("showDatePicker")
+            self.call("initializePlugins")
