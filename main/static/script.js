@@ -3,27 +3,62 @@ function saveTask(element){
     $("#id_date").val($( "#datepicker" ).datepicker( "getDate" ))
     time = ` ${$('#id_time').val().replace(':',' ')}`
     date_time = date.concat(time)
+    color = $('#id_color').val()
+    taskname = $('#id_taskname').val()
     form = Object.fromEntries(new FormData(element).entries())
-    console.log(date_time)
-    // $.ajax({
-    //     url: 'createtask',
-    //     type: 'POST',
-    //     data: {
-    //         csrfmiddlewaretoken: form.csrfmiddlewaretoken,
-    //         body: {
-    //             'taskname': form.taskname,
-    //             'date_time': date_time,
-    //             'color': form.color 
-    //         }
-    //     },
-    //     success: ()=>{
-    //         console.log('saved')
-    //     }
-    // })
+    $.ajax({
+        url: 'createtask',
+        type: 'POST',
+        data: {
+            csrfmiddlewaretoken: form.csrfmiddlewaretoken,
+            body: {
+                'taskname': taskname,
+                'date_time': date_time,
+                'color': color 
+            }
+        },
+        success: ()=>{
+            console.log('saved')
+        }
+    })
 }
 function initializePlugins(){
     $('#datepicker').datepicker()
     $('#id_time').clockTimePicker()
+}
+function switchMode(mode){
+    if (mode == 'Month Mode'){
+        $.ajax({
+            url: 'switchmode',
+            type: 'GET',
+            data: {
+                body: {
+                    'mode': 'Week Mode'
+                }
+            },
+            success: ()=>{
+                $(location).attr('href','/')
+            }
+        })
+    }
+    if (mode == 'Week Mode'){
+        $.ajax({
+            url: 'switchmode',
+            type: 'GET',
+            data: {
+                body: {
+                    'mode': 'Month Mode'
+                }
+            },
+            success: ()=>{
+                $(location).attr('href','/')
+            }
+        })
+    }
+}
+function setCurrentDay(day_id){
+    // console.log($(`#day_${day_id}`)[0].styles.backgroundColor)
+    document.querySelector(`#day_${day_id}`).classList.add('selected')
 }
 // const findOverflows = () => {
 //     const documentWidth = document.documentElement.offsetWidth;

@@ -21,7 +21,7 @@ class ShowtasksweeklyView(UnicornView):
     current = odaylookup[dayIndex]
     value = dayIndex
     daytasks = None
-    showtasks = not showform
+    showtasks = True
     showtasks_polling = True
 
     def dayupdate(self):

@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
 {% block header %}
-<button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
-    Menu
+<button style="padding: 22px;" type="button" aria-label="Menu" aria-controls="navigation"> 
+    <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M6 2H18" stroke="white" stroke-width="3" stroke-linecap="round"/>
+       <path d="M2 9.72415H22.48" stroke="white" stroke-width="3" stroke-linecap="round"/>
+       <path d="M6 18H18" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    </svg>      
 </button>
 <a href="/">
 Home
@@ -19,7 +23,7 @@ Home
     {% csrf_token %}
     <div class="flex flex-row border-2 w-full items-center m-3 rounded-lg">
         <label class="text-white pl-2 pr-2 w-2/3">Email:</label>
-        <input class="bg-white text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.email }}" disabled/>
+        <input class="bg-transparent text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.email }}" disabled/>
     </div>
     <div class="flex flex-row border-2 w-full items-center m-1 rounded-lg">
         <label class="text-white pl-2 pr-2 w-2/3">Username:</label>

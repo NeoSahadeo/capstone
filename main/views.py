@@ -4,14 +4,13 @@ from django.contrib.auth import login as login_auth
 from django.contrib.auth import logout as logout_auth
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
 from .models import User, WeeklyTask
 from .forms import RegisterForm, LoginForm
 
 def index(request):
-    if True:
-        return render(request, 'main/index.html',{
-            'preferredMode': 'Week Mode',
+    return render(request, 'main/index.html',{
+        'preferredMode': User.objects.get(id=request.user.id).preferredMode,
     })
 
 def profile(request):
@@ -95,3 +94,10 @@ def createtask(request):
         )
         newtask.save()
     return HttpResponse('')
+
+def switchmode(request):
+    if request.method == 'GET':
+        user = User.objects.get(id=request.user.id)
+        user.preferredMode = request.GET['body[mode]']
+        user.save(update_fields=['preferredMode'])
+    return HttpResponse()

@@ -1,0 +1,53 @@
+{% load unicorn %}
+<div>
+    <div id="content" class="flex flex-col" class="pb-12">
+        {% unicorn_scripts %}
+        <div id="currentContentHeader" class="max-w-min text-white text-2xl mx-auto" style="padding: 30px;">{{ current }}</div>
+        <div class="flex justify-center">
+            <style>
+                .selected{
+                    background-color: #C9C9C9;
+                    color: black;
+                    border-radius: 11px;
+                    box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+                }
+            </style>
+            <div id="calender_container" class="w-full flex justify-evenly flex-wrap" style="height: 277px; padding-left: 10px; padding-right: 10px; max-width: 375.2px;">
+                {% for day in amountOfDays %}
+                    <div class="flex justify-center items-center" style="width: 42.18px; height: 42.18px; background-color: #2B2B2B; margin: 8.5px; border-radius: 11px; font-size: 22px;">
+                        <button id="day_{{day}}" class="w-full h-full">
+                            {{ day }}
+                        </button>
+                    </div>
+                {% endfor%}            
+            </div>
+        </div>
+        {% if showtasks %}
+            <div id="tasks-id" class="text-white">
+                {% if daytasks.count > 0 %}
+                    <div style="font-size: 22px; padding-top: 37px; padding-bottom: 17px;">
+                        {{ currentDay }}
+                    </div>
+                {% endif %}
+                {% for task in daytasks %}
+                    <div class="flex flex-row items-center rounded-sm cursor-pointer" style="height: 60px; background-color: #1C1C1C; padding-left: 14px; min-width: 337px; margin-bottom: 17px;">
+                        <div class="flex flex-row items-center w-full">
+                            <div class="flex flex-row items-center rounded-sm" style="background-color: #333333; height: 30px; width: 100%; max-width: 89px; margin-right: 7px;">
+                                <div class="w-2 h-full rounded-tl-sm rounded-bl-sm" style="background-color: {{ task.color }};"></div>
+                                <div class="w-full" style="font-size: 22px; padding-left: 8.59px;">{{ task.date_time|time:"G:i" }}</div>
+                            </div>
+                            <div class="text-center mt-auto mb-auto h-auto">
+                                -&nbsp;{{ task.taskname|title }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <footer class="flex justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
+            <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
+                <input id="slider_input" unicorn:key="slider_key" unicorn:partial="tasks-id, currentContentHeader" unicorn:input="monthupdate" unicorn:model="value" value="{{ value }}" type="range" min="0" max="11" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none">
+            </span>
+        </footer>
+    </div>
+</div>
