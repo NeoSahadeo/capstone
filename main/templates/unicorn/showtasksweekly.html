@@ -49,11 +49,13 @@
                             <input id="id_taskname" class="text-white" type="text" style="width: 100%; height: auto; background-color: #1B1B1B; margin-top: 9px;" placeholder="Task Description"/>   
                             <label style="margin-top: 40px;">Time</label>
                             <div class="w-full flex flex-col items-center">
-                                <input id="id_taskname" class="time rounded-full text-center text-5xl font-bold" style="height: 234px;width: 234px; background-color: #70BAFF;" type="text" data-precision="1" value="00:00"/>
+                                <input class="time rounded-full text-center text-5xl font-bold cursor-pointer" style="height: 234px;width: 234px; background-color: #70BAFF;" type="text" data-precision="1" value="00:00"/>
+                                <input class="time" type="text" data-precision="5" data-minimum="10:00" data-maximum="20:00" />
                             </div>
                             <label style="margin-top: 40px">Date</label>
                             <div class="mb-12">
-                                <input style=""/>
+                                <input id="id_date" hidden/>
+                                <div id="datepicker"></div>
                             </div>
                         </div>
                         <footer class="flex flex-row justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">

@@ -16,12 +16,12 @@ odaylookup = {
 }
 
 class ShowtasksweeklyView(UnicornView):
-    showform = True
+    showform = False
 
     current = odaylookup[dayIndex]
     value = dayIndex
     daytasks = None
-    showtasks = False
+    showtasks = not showform
     showtasks_polling = True
 
     def dayupdate(self):
@@ -40,3 +40,5 @@ class ShowtasksweeklyView(UnicornView):
     def updated(self, name, value):
         if name == 'showform':
             ShowtasksweeklyView.dayupdate(self)
+        if name == 'showform' and value == True:
+            self.call("showDatePicker")
