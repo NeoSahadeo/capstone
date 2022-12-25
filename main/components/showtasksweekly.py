@@ -17,7 +17,6 @@ odaylookup = {
 
 class ShowtasksweeklyView(UnicornView):
     showform = False
-
     current = odaylookup[dayIndex]
     value = dayIndex
     daytasks = None
@@ -41,4 +40,4 @@ class ShowtasksweeklyView(UnicornView):
         if name == 'showform':
             ShowtasksweeklyView.dayupdate(self)
         if name == 'showform' and value == True:
-            self.call("initializePlugins")
+            self.call("initializePlugins", 'Week Mode')

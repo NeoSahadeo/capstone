@@ -1,20 +1,41 @@
 {% extends "base.html" %}
 
 {% block header %}
-<button class="hamburger" type="button" aria-label="Menu" aria-controls="navigation">
-    Menu
-</button>
-<div class="mr-4">
-    <label class="text-white">Already Have an Account?</label>
+<div class="ml-auto mr-auto">
+    <label class="text-white text-sm">Already Have an Account?</label>
     <a href="login" class="text-blue-500 underline" >Login</a>
 </div>
 {% endblock %}
 
 {% block unicorn %}
-<span class="text-white">{{ message }}</span>
-<form class="flex flex-col bg-white" method="post" action="{% url 'main:register' %}">
+<style>
+    label, input{
+        margin: 10px 0px 10px 0px;
+        background-color: transparent !important;
+    }
+    .helptext{
+        display: none;
+    }
+    label{
+        font-size: 22px;
+        font-weight: 300;
+    }
+    input{
+        width: 100%; 
+        border-radius: 2px !important;
+    }
+    form{
+        background-color: transparent;
+    }
+</style>
+<form class="flex flex-col w-11/12 max-w-sm bg-transparent items-start ml-auto mr-auto mt-5 px-16 py-14 rounded-lg" method="post" action="{% url 'main:register' %}">
+    <h1 class="text-4xl ml-auto mr-auto mb-4">Register</h1>
+    {% if message %}
+        <span class="text-red-900 bg-red-300 px-2 py-0.5 rounded-sm">{{ message }}</span>
+    {% endif %}
     {% csrf_token %}
     {{ form }}
-    <button type="submit" name="register" class="border-2 border-gray-300 bg-white">Register</button>
+    {{ userimage }}
+    <button type="submit" name="register" class="rounded-lg px-4 py-1.5 mt-4 ml-auto mr-auto bg-blue-400">Register</button>
 </form>
 {% endblock %}

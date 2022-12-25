@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, WeeklyTask
+from .models import User, WeeklyTask, UserImage
 
 # class UserAdmin(admin.ModelAdmin):
 #     pass
@@ -9,4 +9,4 @@ from .models import User, WeeklyTask
 
 admin.site.register(User)
 admin.site.register(WeeklyTask)
-# admin.site.register()
+admin.site.register(UserImage)

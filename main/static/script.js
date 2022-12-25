@@ -18,13 +18,21 @@ function saveTask(element){
             }
         },
         success: ()=>{
-            console.log('saved')
+            try{
+                fetchDay(parseInt($('#icurrentDay').val()))
+            }catch{}
         }
     })
 }
-function initializePlugins(){
-    $('#datepicker').datepicker()
+function initializePlugins(mode){
     $('#id_time').clockTimePicker()
+    $('#datepicker').datepicker()
+    if (mode == 'Month Mode'){  
+        year = new Date().getFullYear()
+        month = parseInt($('#month_id').val())
+        day = parseInt($('#icurrentDay').val())
+        $('#datepicker').datepicker('setDate', new Date(year,month,day))
+    }
 }
 function switchMode(mode){
     if (mode == 'Month Mode'){
@@ -56,10 +64,7 @@ function switchMode(mode){
         })
     }
 }
-function setCurrentDay(day_id){
-    // console.log($(`#day_${day_id}`)[0].styles.backgroundColor)
-    document.querySelector(`#day_${day_id}`).classList.add('selected')
-}
+
 // const findOverflows = () => {
 //     const documentWidth = document.documentElement.offsetWidth;
 

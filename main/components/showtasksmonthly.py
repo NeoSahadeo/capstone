@@ -1,9 +1,10 @@
 from datetime import date
+from calendar import monthrange
 from django_unicorn.components import UnicornView
 from ..models import WeeklyTask
 
 today = date.today()
-monthIndex = today.month
+monthIndex = today.month-1
 
 omonthlookup = {
     0: 'January',
@@ -13,11 +14,11 @@ omonthlookup = {
     4: 'May',
     5: 'June',
     6: 'July',
-    8: 'August',
-    9: 'September',
-    10: 'October',
-    11: 'November',
-    12: 'December'
+    7: 'August',
+    8: 'September',
+    9: 'October',
+    10: 'November',
+    11: 'December'
 }
 odaylookup = {
     0: 'Monday',
@@ -30,6 +31,8 @@ odaylookup = {
 }
 
 def generateDays(value):
+    # monthrange return tuple, I want the second value
+    value = monthrange(today.year, value)[1]
     arr = []
     for x in range(1, value+1):
         arr.append(x)
@@ -37,20 +40,60 @@ def generateDays(value):
 
 class ShowtasksmonthlyView(UnicornView):
     showform = False
+    showtask = False
+    showtasks = True
     current = omonthlookup[monthIndex]
     value = monthIndex
-    showtasks = True
+    init_value = None
+    fetchtask = None
     daytasks = None
     currentDay = None
+    icurrentDay = None
+    task_id = None
     amountOfDays = 0
-    def monthupdate(self):
-        # daytasks = WeeklyTask.objects.filter(user_id=self.request.user.id, date_time__day=self.day, date_time__month=today.month, date_time__year=today.year).order_by('-date_time').values()
-        # self.daytasks = daytasks
-        amountOfDays = generateDays(31)
+
+    def monthupdate(self, day):
+        amountOfDays = int(self.value)+1
         self.value = self.value
         self.current = omonthlookup[int(self.value)]
-        self.currentDay = f'{self.current} - '
-        self.amountOfDays = amountOfDays
+        self.currentDay = f'{self.current} - {day}'
+        self.icurrentDay = day
+        self.amountOfDays = generateDays(amountOfDays)
+        if today.month != int(self.value)+1:
+            self.call('setCurrentDay', day)
+            ShowtasksmonthlyView.setSimilar(self, value=day)
+        else:
+            ShowtasksmonthlyView.setSimilar(self, value=today.day)
+
     def mount(self):
-        ShowtasksmonthlyView.monthupdate(self)
+        ShowtasksmonthlyView.monthupdate(self, today.day)
         self.call('setCurrentDay', today.day)
+        daytasks = WeeklyTask.objects.filter(user_id=self.request.user.id, date_time__day=today.day, date_time__month=today.month, date_time__year=today.year).order_by('-date_time').values()
+        self.daytasks = daytasks
+        self.init_value = self.value
+
+    def updated(self, name, value):
+        if int(value) == monthIndex and name == 'value':
+            ShowtasksmonthlyView.setSimilar(self, value=today.day)
+            ShowtasksmonthlyView.monthupdate(self, today.day)
+            self.call('setCurrentDay', today.day)
+            return None
+        if name == 'icurrentDay':
+            self.call('setCurrentDay', int(value))
+            ShowtasksmonthlyView.setSimilar(self, value=value)
+            return None
+        if name == 'showform' and value == True:
+            self.call("initializePlugins", 'Month Mode')                
+            return None
+        if name == 'task_id':
+            fetchtask = WeeklyTask.objects.get(user_id=self.request.user.id, id=int(value))
+            self.fetchtask = fetchtask
+        self.call('setCurrentDay', 1)
+        ShowtasksmonthlyView.monthupdate(self,1)        
+
+    def setSimilar(self, **kwargs):
+        value = kwargs['value']
+        daytasks = WeeklyTask.objects.filter(user_id=self.request.user.id, date_time__day=int(value), date_time__month=int(self.value)+1, date_time__year=today.year).order_by('-date_time').values()
+        self.daytasks = daytasks
+        self.currentDay = f'{self.current} - {value}'
+        self.icurrentDay = int(value)

@@ -5,13 +5,16 @@ from django.contrib.auth import logout as logout_auth
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse, redirect
-from .models import User, WeeklyTask
+from .models import User, WeeklyTask, UserImage
 from .forms import RegisterForm, LoginForm
 
 def index(request):
-    return render(request, 'main/index.html',{
-        'preferredMode': User.objects.get(id=request.user.id).preferredMode,
-    })
+    if request.user.is_authenticated == True:
+        return render(request, 'main/index.html',{
+            'preferredMode': User.objects.get(id=request.user.id).preferredMode,
+            'profileimage': UserImage.objects.get(user_id=request.user.id).image
+        })
+    return redirect("main:login")
 
 def profile(request):
     if request.user.is_authenticated:
@@ -23,14 +26,14 @@ def profile(request):
     else:
         return render(request, 'main/login.html',{
             'form': LoginForm(),
-            'message': 'Login is required to view your profile.'
+            'message': 'Login is required to view your profile.',
         })
 
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
+        image = request.POST['image']
         # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirm_password"]
@@ -44,6 +47,8 @@ def register(request):
         try:
             user = User.objects.create_user(username, email, password)
             user.save()
+            uploadedimage = UserImage(used_id=user.id ,image=image)
+            uploadedimage.save()
 
         except IntegrityError:
             return render(request, "main/register.html", {
@@ -79,7 +84,7 @@ def login(request):
 
 def logout(request):
     logout_auth(request)
-    return HttpResponseRedirect(reverse("main:index"))
+    return HttpResponseRedirect(reverse("main:login"))
 
 def createtask(request):
     if request.method == 'POST':
@@ -96,7 +101,7 @@ def createtask(request):
     return HttpResponse('')
 
 def switchmode(request):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.user.is_authenticated == True:
         user = User.objects.get(id=request.user.id)
         user.preferredMode = request.GET['body[mode]']
         user.save(update_fields=['preferredMode'])

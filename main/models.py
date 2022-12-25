@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser, models.Model):
     preferredMode = models.CharField(default='Week Mode', max_length=100)
-    pass
 
 class WeeklyTask(models.Model):
     user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
@@ -14,4 +13,7 @@ class WeeklyTask(models.Model):
 
     def __str__(self):
         return self.taskname
-    
+
+class UserImage(models.Model):
+    user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')

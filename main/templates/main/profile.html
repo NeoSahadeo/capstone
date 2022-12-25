@@ -1,34 +1,40 @@
 {% extends "base.html" %}
 
 {% block header %}
-<button style="padding: 22px;" type="button" aria-label="Menu" aria-controls="navigation"> 
-    <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-       <path d="M6 2H18" stroke="white" stroke-width="3" stroke-linecap="round"/>
-       <path d="M2 9.72415H22.48" stroke="white" stroke-width="3" stroke-linecap="round"/>
-       <path d="M6 18H18" stroke="white" stroke-width="3" stroke-linecap="round"/>
-    </svg>      
-</button>
-<a href="/">
+<a  class="text-white p-3 ml-4 mt-auto mb-auto rounded-lg" style="background-color: #111111;" href="/">
 Home
 </a>
-<a href="logout" class="text-blue-500 underline pr-3">Logout</a>
+<a href="logout" class="text-blue-500 underline p-2 border-2 border-blue-900 rounded-lg text-center mr-4">Logout</a>
 {% endblock %}
 
 {% block unicorn %}
-<div class="flex flex-col w-full items-center pt-4">
-    <h1 class="text-4xl text-white">Hey, {{ userinfo.username }}!</h1>
-    <div class="w-48 h-48 bg-white rounded-full mt-8"></div>
-</div>
-<form class="flex flex-col w-full items-center px-6 md:px-60 mt-5">
+<style>
+    td{
+        border-top: 0.01rem solid rgb(39, 39, 39);
+        border-left: 0.01rem solid rgb(39, 39, 39);
+    }
+</style>
+<form class="flex flex-col w-full items-center px-6 md:px-60">
     {% csrf_token %}
-    <div class="flex flex-row border-2 w-full items-center m-3 rounded-lg">
-        <label class="text-white pl-2 pr-2 w-2/3">Email:</label>
-        <input class="bg-transparent text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.email }}" disabled/>
+    <div class="flex flex-col w-full items-center mb-4 mt-5">
+        <h1 class="text-4xl text-white">Hey, {{ userinfo.username }}!</h1>
+        <button id="image_button" onclick="$('#id_image')[0].click()" type="button" class="w-48 h-48 rounded-full mt-8" style="background-image: url('{{ userinfo.image.url }}'); background-size: contain;"><input type="file" name="image" accept="image/*" id="id_image" hidden /></button>
     </div>
-    <div class="flex flex-row border-2 w-full items-center m-1 rounded-lg">
-        <label class="text-white pl-2 pr-2 w-2/3">Username:</label>
-        <input class="bg-white text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.username }}" />
+    {% if message %}
+        <span class="text-red-900 bg-red-300 px-2 py-0.5 rounded-sm">{{ message }}</span>
+    {% endif %}
+    <div>
+        <table class="bg-white text-black rounded-lg mt-10">
+            <tr>
+                <td><label class="pl-2 pr-2 w-2/3">Email:</label></td>
+                <td><input class="bg-transparent text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.email }}" disabled/></td>
+            </tr>
+            <tr>
+                <td><label class="pl-2 pr-2 w-2/3">Username:</label></td>
+                <td><input class="bg-white text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.username }}" /></td>
+            </tr>
+        </table>
+        <button tpye="submit" class="uppercase bg-green-400 px-3 py-1.5 text-center rounded-lg mt-4">save</button>
     </div>
-    <button tpye="submit" class="uppercase bg-green-400 px-3 py-1.5 text-center rounded-sm mt-auto ml-auto">save</button>
 </form>
 {% endblock %}
