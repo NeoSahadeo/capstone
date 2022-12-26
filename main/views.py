@@ -11,6 +11,7 @@ from .forms import RegisterForm, LoginForm
 def index(request):
     if request.user.is_authenticated == True:
         return render(request, 'main/index.html',{
+            'username': User.objects.get(id=request.user.id).username,
             'preferredMode': User.objects.get(id=request.user.id).preferredMode,
             'profileimage': UserImage.objects.get(user_id=request.user.id).image
         })
@@ -90,6 +91,7 @@ def logout(request):
     return HttpResponseRedirect(reverse("main:login"))
 
 def createtask(request):
+    print('cloor')
     if request.method == 'POST':
         taskname = request.POST['body[taskname]']
         color = request.POST['body[color]']

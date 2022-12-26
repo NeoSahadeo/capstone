@@ -3,7 +3,7 @@ function saveTask(element){
     $("#id_date").val($( "#datepicker" ).datepicker( "getDate" ))
     time = ` ${$('#id_time').val().replace(':',' ')}`
     date_time = date.concat(time)
-    color = $('#id_color').val()
+    color = $('#color_storage')[0].value
     taskname = $('#id_taskname').val()
     form = Object.fromEntries(new FormData(element).entries())
     $.ajax({
@@ -25,6 +25,7 @@ function saveTask(element){
     })
 }
 function initializePlugins(mode){
+    colorpicker()
     $('#id_time').clockTimePicker()
     $('#datepicker').datepicker()
     if (mode == 'Month Mode'){  
@@ -64,8 +65,12 @@ function switchMode(mode){
         })
     }
 }
-function colorpicker(init_hex){
-    $('id_color').val()
+function colorpicker(){
+    if ($('#id_color')[0].style.backgroundColor == ''){
+        color = `#${Math.floor(Math.random()*16777215).toString(16)}`
+        $('#id_color')[0].style.backgroundColor = color
+        $('#color_storage')[0].value = color
+    }
 }
 // const findOverflows = () => {
 //     const documentWidth = document.documentElement.offsetWidth;
