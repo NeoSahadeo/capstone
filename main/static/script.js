@@ -64,7 +64,9 @@ function switchMode(mode){
         })
     }
 }
-
+function colorpicker(init_hex){
+    $('id_color').val()
+}
 // const findOverflows = () => {
 //     const documentWidth = document.documentElement.offsetWidth;
 

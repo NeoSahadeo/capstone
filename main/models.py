@@ -16,4 +16,4 @@ class WeeklyTask(models.Model):
 
 class UserImage(models.Model):
     user_id = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', default='images/default.jpg')

@@ -13,12 +13,37 @@ Home
         border-top: 0.01rem solid rgb(39, 39, 39);
         border-left: 0.01rem solid rgb(39, 39, 39);
     }
+    #id_image{
+        display: none;
+    }
 </style>
-<form class="flex flex-col w-full items-center px-6 md:px-60">
+<form enctype="multipart/form-data" action='{% url "main:updateprofile" %}' method='post' class="flex flex-col w-full items-center px-6 md:px-60">
     {% csrf_token %}
+    <input id="input_submit" type="submit" hidden/>
     <div class="flex flex-col w-full items-center mb-4 mt-5">
         <h1 class="text-4xl text-white">Hey, {{ userinfo.username }}!</h1>
-        <button id="image_button" onclick="$('#id_image')[0].click()" type="button" class="w-48 h-48 rounded-full mt-8" style="background-image: url('{{ userinfo.image.url }}'); background-size: contain;"><input type="file" name="image" accept="image/*" id="id_image" hidden /></button>
+        {{ form.image }}
+        <button id="image_button" onclick="imageSubmit()" type="button" class="w-48 h-48 rounded-full mt-8" style="background-image: url('{{ profileimage }}');background-size: cover; background-repeat: no-repeat;">
+        </button>
+        <script>
+            let timer, interval
+            async function imageSubmit(){
+                $('#id_image')[0].click()
+                // Polls for response
+                clearTimeout(timer)
+                clearInterval(interval)
+                interval = setInterval(()=>{
+                    if ($('#id_image').val().length > 0){
+                        clearInterval(interval)
+                        $('#input_submit').click()
+                    }
+                },500)
+                timer = setTimeout(()=>{
+                    clearInterval(interval)
+                    alert('Timeout Error, select an file/image/document on retry')
+                },100000)
+            }
+        </script>
     </div>
     {% if message %}
         <span class="text-red-900 bg-red-300 px-2 py-0.5 rounded-sm">{{ message }}</span>
@@ -34,7 +59,7 @@ Home
                 <td><input class="bg-white text-black border-0 h-full p-3 w-full" name="username" type='text' value="{{ userinfo.username }}" /></td>
             </tr>
         </table>
-        <button tpye="submit" class="uppercase bg-green-400 px-3 py-1.5 text-center rounded-lg mt-4">save</button>
+        <button tpye="submit" class="uppercase bg-green-400 px-3 py-1.5 text-center rounded-lg mt-4">Update</button>
     </div>
 </form>
 {% endblock %}

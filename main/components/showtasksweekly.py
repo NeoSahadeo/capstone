@@ -20,24 +20,28 @@ class ShowtasksweeklyView(UnicornView):
     current = odaylookup[dayIndex]
     value = dayIndex
     daytasks = None
+    init_value = None
     showtasks = True
     showtasks_polling = True
 
-    def dayupdate(self):
+    def dayupdate(self,day):
         # 'weight' describes the 'displacement'/vector from the current day to
         # the day requested by the user.
         weight = today - timedelta(days=int(dayIndex)-int(self.value))
         daytasks = WeeklyTask.objects.filter(user_id=self.request.user.id, date_time__day=weight.day, date_time__month=weight.month, date_time__year=weight.year).order_by('-date_time').values()
-
-        self.value = self.value
+        self.value = day
         self.daytasks = daytasks
         self.current = odaylookup[int(self.value)]
 
     def mount(self):
-        ShowtasksweeklyView.dayupdate(self)
+        self.init_value = dayIndex
+        ShowtasksweeklyView.dayupdate(self , dayIndex)
 
     def updated(self, name, value):
-        if name == 'showform':
-            ShowtasksweeklyView.dayupdate(self)
         if name == 'showform' and value == True:
             self.call("initializePlugins", 'Week Mode')
+        elif name == 'showform' and value == False:
+            ShowtasksweeklyView.dayupdate(self,0)
+            self.call('refresh', value)
+        if name == 'value':
+            ShowtasksweeklyView.dayupdate(self, value)

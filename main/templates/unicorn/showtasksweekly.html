@@ -10,20 +10,21 @@
         {% unicorn_scripts %}
         <div class="px-3 pb-12">
             <div id="currentContentHeader" class="max-w-min text-white text-2xl mx-auto" style="padding: 30px;">{{ current }}</div>
+            <input id="slider_input" unicorn:key="slider_key" unicorn:model="value" hidden/>
             {% if showtasks %}
-                <div id="tasks-id" class="text-white">
+                <div id="tasks-id" style="max-width: 375.2px;" class="text-white ml-auto mr-auto">
                     {% for task in daytasks %}
-                        <div class="flex flex-row items-center rounded-sm cursor-pointer" style="height: 60px; background-color: #1C1C1C; padding-left: 14px; min-width: 337px; margin-bottom: 17px;">
+                        <button onclick="" class="flex flex-row items-center rounded-sm cursor-pointer" style="height: 60px; background-color: #1C1C1C; padding-left: 14px; min-width: 337px; margin-bottom: 17px;">
                             <div class="flex flex-row items-center w-full">
                                 <div class="flex flex-row items-center rounded-sm" style="background-color: #333333; height: 30px; width: 100%; max-width: 89px; margin-right: 7px;">
                                     <div class="w-2 h-full rounded-tl-sm rounded-bl-sm" style="background-color: {{ task.color }};"></div>
-                                    <div class="w-full" style="font-size: 22px; padding-left: 8.59px;">{{ task.date_time|time:"G:i" }}</div>
+                                    <div class="w-full flex justify-start" style="font-size: 22px; padding-left: 8.59px;">{{ task.date_time|time:"G:i" }}</div>
                                 </div>
                                 <div class="text-center mt-auto mb-auto h-auto">
                                     -&nbsp;{{ task.taskname|title }}
                                 </div>
                             </div>
-                        </div>
+                        </button>
                     {% endfor %}
                 </div>
             {% endif %}
@@ -42,7 +43,7 @@
                             <div style="height: 42px;" class="flex flex-row justify-between items-center">
                                 <label for="id_taskname" class="pb-2">Task</label>
                                 <div class="flex flex-col justify-center items-center pb-2">
-                                    <input id="id_color" value="#FFFFFF" style="width: 31px;height: 31px;" class="cursor-pointer rounded-full"/>
+                                    <input id="id_color" style="width: 31px;height: 31px;" class="cursor-pointer rounded-full"/>
                                     <label for="id_color" style="" class="text-xs">Color</label>
                                 </div>
                             </div>
@@ -80,9 +81,18 @@
                 </button>
                 <footer class="flex justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
                     <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
-                        <input id="slider_input" unicorn:key="slider_key" unicorn:input="dayupdate" unicorn:model="value" value="{{ value }}" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none">
+                        <input oninput="weekSlide(this)" value="{{ init_value }}" type="range" min="0" max="6" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none">
                     </span>
                 </footer>
         {% endif %}
+        <script>
+            function weekSlide(element){
+                $('#slider_input').val(element.value)
+                Unicorn.trigger('showtasksweekly','slider_key')
+            }
+            function refresh(value){
+                Unicorn.trigger('showtasksweekly','slider_key')
+            }
+        </script>
     </div>
 </div>

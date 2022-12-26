@@ -20,8 +20,11 @@ def profile(request):
     if request.user.is_authenticated:
         id = request.user.id
         user = User.objects.get(id = id)
+        profileimage = UserImage.objects.get(user_id=user.id).image.url
         return render(request, 'main/profile.html',{
             'userinfo': user,
+            'profileimage': profileimage,
+            'form': RegisterForm(),
         })
     else:
         return render(request, 'main/login.html',{
@@ -106,3 +109,21 @@ def switchmode(request):
         user.preferredMode = request.GET['body[mode]']
         user.save(update_fields=['preferredMode'])
     return HttpResponse()
+
+def updateprofile(request):
+    if request.method == 'POST':
+        image = request.FILES['image']
+        username = request.POST['username']
+        user = User.objects.get(id=request.user.id)
+        try:
+            uploadedimage = UserImage.objects.get(user_id=request.user.id)
+            uploadedimage.delete()
+            uploadedimage = UserImage(user_id=User.objects.get(id=request.user.id), image=image)
+            uploadedimage.save()
+        except:
+            uploadedimage = UserImage(user_id=User.objects.get(id=request.user.id), image=image)
+            uploadedimage.save()
+
+        user.username = username
+        user.save(update_fields=['username'])
+    return redirect('main:profile')
