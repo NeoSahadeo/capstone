@@ -1,0 +1,12 @@
+<div id="color_container" class="hidden absolute top-0 left-0 w-screen h-screen flex justify-center items-center" style="z-index: 999;">
+    <div class="w-80 pt-0 rounded-lg flex flex-col justify-between" style="background-color: #1A1A1A; z-index: 999;">
+        <div class="w-full h-20 mb-3 rounded-tl-lg rounded-tr-lg" id="color_display"></div>
+        <div class="flex flex-row w-full justify-evenly">
+            <input oninput="updatecolorpicker()" class="slider w-2" type="range" value="" min="0" max="255" id="red"/>
+            <input oninput="updatecolorpicker()" class="slider w-2" type="range" value="" min="0" max="255" id="green"/>
+            <input oninput="updatecolorpicker()" class="slider w-2" type="range" value="" min="0" max="255" id="blue"/>    
+        </div>
+        <button onclick="colorpickertool()" class="uppercase bg-green-400 px-2 py-1.5 mt-10 rounded-bl-lg rounded-br-lg">CHANGE COLOR</button>
+    </div>
+    <div class="absolute top-0 left-0 w-screen h-screen" style="background-color: #131313; z-index: 900; opacity: 0.6;"></div>
+</div>

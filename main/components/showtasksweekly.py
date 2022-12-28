@@ -15,14 +15,21 @@ odaylookup = {
     6: 'Sunday',
 }
 
+def formatdate(date_time):
+    return f'{str(date_time).split()[0]} {str(date_time).split()[1][0:5]}'
+
 class ShowtasksweeklyView(UnicornView):
     showform = False
+    showtask = False
+    showtasks = True
     current = odaylookup[dayIndex]
     value = dayIndex
     daytasks = None
     init_value = None
-    showtasks = True
+    fetchtask = None
+    task_id = None
     showtasks_polling = True
+    weight = None
 
     def dayupdate(self,day):
         # 'weight' describes the 'displacement'/vector from the current day to
@@ -32,6 +39,7 @@ class ShowtasksweeklyView(UnicornView):
         self.value = day
         self.daytasks = daytasks
         self.current = odaylookup[int(self.value)]
+        self.weight = weight
 
     def mount(self):
         self.init_value = dayIndex
@@ -40,8 +48,14 @@ class ShowtasksweeklyView(UnicornView):
     def updated(self, name, value):
         if name == 'showform' and value == True:
             self.call("initializePlugins", 'Week Mode')
-        elif name == 'showform' and value == False:
-            ShowtasksweeklyView.dayupdate(self,0)
-            self.call('refresh', value)
+        if name == 'showtasks' and value == True:
+            self.init_value = self.value
+            ShowtasksweeklyView.dayupdate(self, self.value)
+            self.call('refresh')
+        if name == 'task_id':
+            fetchtask = WeeklyTask.objects.get(user_id=self.request.user.id, id=int(value))
+            self.fetchtask = fetchtask
+            self.call('formatdate_time', formatdate(fetchtask.date_time))
+            self.call("initializePlugins", 'Week Mode')
         if name == 'value':
             ShowtasksweeklyView.dayupdate(self, value)

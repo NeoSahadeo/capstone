@@ -4,6 +4,8 @@
         {% unicorn_scripts %}
         <input id="task_id" value="" unicorn:key="task_id" unicorn:model="task_id" hidden/>
         <input id="month_id" value=" {{ value }} " hidden/>
+        <input id="icurrentDay_storage" hidden/>
+        <input id="icurrentDay" value="" unicorn:key="icurrentDay" unicorn:model="icurrentDay" hidden/>
         <div id="currentContentHeader" class="max-w-min text-white text-2xl mx-auto" style="padding: 30px;">{{ current }}</div>
         <div class="flex justify-center mb-14">
             <style>
@@ -14,6 +16,7 @@
                     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
                 }
             </style>
+            {% include 'main/colorpicker.html' %}
             <div id="calender_container" class="w-full flex flex-wrap" style="height: 277px; padding-left: 10px; padding-right: 10px; max-width: 375.2px;">
                 {% for day in amountOfDays %}
                     <div class="flex justify-center items-center" style="width: 42.18px; height: 42.18px; background-color: #2B2B2B; margin: 8.5px; border-radius: 11px; font-size: 22px;">
@@ -28,22 +31,11 @@
             <div id="tasks-id" class="text-white mb-6" style="padding-left: 14px; padding-right: 14px;">
         {% endif %}
                 <div style="font-size: 22px; padding-top: 37px; padding-bottom: 17px;">
-                    <input id="icurrentDay" value="" unicorn:key="icurrentDay" unicorn:model="icurrentDay" hidden/>
                     <div>{{ currentDay }}</div>
                 </div>
         {% if showtasks %}
                 {% for task in daytasks %}
-                    <button onclick="loadtask({{ task.id }})" unicorn:click="$toggle('showtasks','showtask')" class="flex flex-row items-center rounded-sm cursor-pointer" style="height: 60px; background-color: #1C1C1C; padding-left: 14px; min-width: 337px; margin-bottom: 17px;">
-                        <div class="flex flex-row items-center w-full">
-                            <div class="flex flex-row items-center rounded-sm" style="background-color: #333333; height: 30px; width: 100%; max-width: 89px; margin-right: 7px;">
-                                <div class="w-2 h-full rounded-tl-sm rounded-bl-sm" style="background-color: {{ task.color }};"></div>
-                                <div class="w-full" style="font-size: 22px; padding-left: 8.59px;">{{ task.date_time|time:"G:i" }}</div>
-                            </div>
-                            <div class="text-center mt-auto mb-auto h-auto">
-                                -&nbsp;{{ task.taskname|title }}
-                            </div>
-                        </div>
-                    </button>
+                    {% include 'main/tasks.html' %}
                 {% endfor %}
             </div>
         <button unicorn:click="$toggle('showform', 'showtasks')" class="flex justify-center items-center rounded-full fixed right-0" style="background-color: #181818;width: 49px; height: 49px; margin: 22px; bottom: 81px;">
@@ -55,54 +47,15 @@
         <footer class="flex justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
             <span class="flex justify-center items-center w-52 h-2 rounded-lg" style="background-color: #363636;">
                 <input id="slider_input" unicorn:key="slider_key" unicorn:model="value" hidden/>
-                <input value="{{ init_value }}" oninput="monthSlide(this)" type="range" min="0" max="11" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none"/>
+                <input id="slider" value="{{ init_value }}" oninput="monthSlide(this)" type="range" min="0" max="11" step="1" class="w-44 h-2 bg-transparent appearance-none cursor-pointer focus:outline-none"/>
             </span>
         </footer>
         {% endif %}
         {% if showform %}
-            <div class="absolute w-full h-full top-0 left-0" style="background-color:#131313;">
-                <header class="flex justify-between items-center" style="background-color: #181818; height: 60px;">
-                </header>
-                <style>
-                    label{
-                    font-size: 30px;
-                    }
-                </style>
-                <form onsubmit="saveTask(this);return false" class="flex flex-col text-white w-full" style="padding-top: 35px; padding-bottom: 50px;">
-                    {% csrf_token %}
-                    <div class="flex flex-col item" style="padding-left: 28px; padding-right: 22px;">
-                        <div style="height: 42px;" class="flex flex-row justify-between items-center">
-                            <label for="id_taskname" class="pb-2">Task</label>
-                            <div class="flex flex-col justify-center items-center pb-2">
-                                <input id="id_color" value="#FFFFFF" style="width: 31px;height: 31px;" class="cursor-pointer rounded-full"/>
-                                <label for="id_color" class="text-xs">Color</label>
-                            </div>
-                        </div>
-                        <input id="id_taskname" class="text-white" type="text" style="width: 100%; height: auto; background-color: #1B1B1B; margin-top: 9px;" placeholder="Task Description"/>   
-                        <label style="margin-top: 40px;">Time</label>
-                        <div class="w-full flex flex-col items-center">
-                            <input id="id_time" class="time rounded-full text-center text-5xl font-bold cursor-pointer text-white" style="height: 234px;width: 234px; background-color: #70BAFF;" type="text" data-precision="1" value="00:00"/>
-                        </div>
-                        <label style="margin-top: 40px">Date</label>
-                        <div class="mb-12">
-                            <input id="id_date" hidden/>
-                            <div id="datepicker"></div>
-                        </div>
-                    </div>
-                    <footer class="flex flex-row justify-center items-center w-full fixed bottom-0" style="height: 59px;background-color: #1A1A1A;">
-                        <button type="submit" unicorn:click="$toggle('showform', 'showtasks')" style="background-color: #368A34; width: 76px; height: 35px;" class="font-bold uppercase rounded-full">SAVE</button>
-                        <button type="button" unicorn:click="$toggle('showform', 'showtasks')" style="background-color: #8E2121; margin-right: 13px; margin-bottom: 8px; margin-top: 8px; width: 42px; height: 42px; right: 0px;" class="absolute flex justify-center items-center text-black rounded-full">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M4 4C4 3.44772 4.44772 3 5 3H19C19.5523 3 20 3.44772 20 4C20 4.55228 19.5523 5 19 5H5C4.44772 5 4 4.55228 4 4Z" fill="white"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M5.92329 7.00293C6.47395 6.96057 6.95468 7.37263 6.99704 7.92329L7.78397 18.1534C7.86413 19.1954 8.73301 20 9.77808 20H14.2219C15.267 20 16.1358 19.1954 16.216 18.1534L17.0029 7.92329C17.0453 7.37263 17.526 6.96057 18.0767 7.00293C18.6273 7.04529 19.0394 7.52603 18.997 8.07668L18.2101 18.3068C18.0498 20.3908 16.312 22 14.2219 22H9.77808C7.68794 22 5.95017 20.3908 5.78986 18.3068L5.00293 8.07668C4.96057 7.52603 5.37263 7.04529 5.92329 7.00293Z" fill="white"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 4.15051C12.5784 4.69033 13.3463 4.99999 14.1552 4.99999L16 4.99999V2.99999L14.1552 2.99999C13.7679 2.99999 13.4061 2.8064 13.1913 2.4841C12.6246 1.63405 11.3754 1.63404 10.8087 2.4841C10.5939 2.8064 10.2321 2.99999 9.84479 2.99999L8 2.99999V4.99999L9.84479 4.99999C10.6537 4.99999 11.4216 4.69033 12 4.15051Z" fill="white"/>
-                            </svg>                                
-                        </button>
-                    </footer>    
-                </form>
-            </div>
+            {% include 'main/createtask.html' %}
         {% endif %}
         {% if showtask %}
+            {% include 'main/createtask.html' %}
         {% endif %}
         <script>
             function fetchDay(day){
@@ -137,8 +90,12 @@
             }
             function loadtask(id){
                 $('#task_id').val(id)
-                console.log($('#task_id')[0].value)
                 Unicorn.trigger('showtasksmonthly','task_id')
+            }
+            function refresh(){
+                fetchDay($('#icurrentDay_storage').val())
+                month = $('#month_id').val()
+                $('#slider').val(parseInt(month))
             }
         </script>
     </div>

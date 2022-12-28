@@ -1,0 +1,11 @@
+<button onclick="loadtask({{ task.id }})" unicorn:click="$toggle('showtasks','showtask')" class="flex flex-row items-center rounded-sm cursor-pointer" style="height: 60px; background-color: #1C1C1C; padding-left: 14px; min-width: 337px; margin-bottom: 17px;">
+    <div class="flex flex-row items-center w-full">
+        <div class="flex flex-row items-center rounded-sm" style="background-color: #333333; height: 30px; width: 100%; max-width: 89px; margin-right: 7px;">
+            <div class="w-2 h-full rounded-tl-sm rounded-bl-sm" style="background-color: #{{ task.color }};"></div>
+            <div class="w-full" style="font-size: 22px; padding-left: 8.59px;">{{ task.date_time|time:"G:i" }}</div>
+        </div>
+        <div class="text-center mt-auto mb-auto h-auto">
+            -&nbsp;{{ task.taskname|title }}
+        </div>
+    </div>
+</button>

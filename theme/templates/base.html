@@ -1,5 +1,5 @@
 {% load static tailwind_tags %}
-<!DOCTYPE html>
+<!DOCTYPE html orient="vertical">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,11 @@
          html {
             overflow: -moz-scrollbars-vertical; 
             overflow-y: scroll;
-         }         
+         }
+         .slider{
+            -webkit-appearance: slider-vertical;
+            /* -webkit-appearance: none; */
+         }    
       </style>
       {% tailwind_css %}
       <link rel="stylesheet" href="{% static 'jquery-ui.min.css' %}">

@@ -38,6 +38,9 @@ def generateDays(value):
         arr.append(x)
     return arr
 
+def formatdate(date_time):
+    return f'{str(date_time).split()[0]} {str(date_time).split()[1][0:5]}'
+    
 class ShowtasksmonthlyView(UnicornView):
     showform = False
     showtask = False
@@ -73,21 +76,33 @@ class ShowtasksmonthlyView(UnicornView):
         self.init_value = self.value
 
     def updated(self, name, value):
+        print(name,value)
         if int(value) == monthIndex and name == 'value':
             ShowtasksmonthlyView.setSimilar(self, value=today.day)
             ShowtasksmonthlyView.monthupdate(self, today.day)
             self.call('setCurrentDay', today.day)
+            return None
+        if name == 'showtasks' and value == True:
             return None
         if name == 'icurrentDay':
             self.call('setCurrentDay', int(value))
             ShowtasksmonthlyView.setSimilar(self, value=value)
             return None
         if name == 'showform' and value == True:
-            self.call("initializePlugins", 'Month Mode')                
+            self.call("initializePlugins", 'Month Mode')
+            return None
+        if name == 'showform' and value == False:
+            self.call('refresh')
+            return None
+        if name == 'showtask' and value == False:
+            self.call('refresh')
             return None
         if name == 'task_id':
             fetchtask = WeeklyTask.objects.get(user_id=self.request.user.id, id=int(value))
             self.fetchtask = fetchtask
+            self.call('formatdate_time', formatdate(fetchtask.date_time))
+            self.call("initializePlugins", 'Month Mode')
+            return None
         self.call('setCurrentDay', 1)
         ShowtasksmonthlyView.monthupdate(self,1)        
 
