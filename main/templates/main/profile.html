@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load webpush_notifications %}
 
 {% block header %}
 <a  class="text-white p-3 ml-4 mt-auto mb-auto rounded-lg" style="background-color: #111111;" href="/">
@@ -36,7 +37,7 @@ Home
         display: block;
     }
 </style>
-<form enctype="multipart/form-data" action='{% url "main:updateprofile" %}' method='post' class="flex flex-col w-full items-center px-6 md:px-60">
+<form enctype="multipart/form-data" action='{% url "main:updateprofile" %}' method='post' class="flex flex-col w-full items-center px-6 md:px-60 h-full">
     {% csrf_token %}
     <input id="input_submit" type="submit" hidden/>
     <div class="flex flex-col w-full items-center mb-4 mt-5">
@@ -87,6 +88,9 @@ Home
             </tr>
         </table>
         <button id="submit_button" type="submit" class="hidden uppercase bg-green-400 px-3 py-1.5 m-3 ml-0 text-center rounded-lg">Update</button>
+    </div>
+    <div class="mt-6 flex flex-col hidden md:block">
+        {% webpush_button with_class="w-62 px-2 py-1.5 rounded-lg bg-purple-500 text-black" %}
     </div>
 </form>
 <script>

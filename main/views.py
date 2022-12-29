@@ -7,9 +7,18 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, reverse, redirect
 from .models import User, WeeklyTask, UserImage
 from .forms import RegisterForm, LoginForm
+from .threads import run_continuously
+
+def threads():
+    # Start the background thread
+    try:
+        stop_run_continuously.set()
+    except:
+        stop_run_continuously = run_continuously()
 
 def index(request):
     if request.user.is_authenticated == True:
+        threads()
         return render(request, 'main/index.html',{
             'username': User.objects.get(id=request.user.id).username,
             'preferredMode': User.objects.get(id=request.user.id).preferredMode,
@@ -19,6 +28,7 @@ def index(request):
 
 def profile(request):
     if request.user.is_authenticated:
+        threads()
         id = request.user.id
         user = User.objects.get(id = id)
         profileimage = UserImage.objects.get(user_id=user.id).image.url

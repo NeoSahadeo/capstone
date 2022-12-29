@@ -854,6 +854,10 @@ select {
   margin-bottom: 1.5rem;
 }
 
+.mt-6 {
+  margin-top: 1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -904,23 +908,6 @@ select {
 
 .h-2 {
   height: 0.5rem;
-}
-
-.h-9 {
-  height: 2.25rem;
-}
-
-.h-3 {
-  height: 0.75rem;
-}
-
-.h-10 {
-  height: 2.5rem;
-}
-
-.max-h-min {
-  max-height: -moz-min-content;
-  max-height: min-content;
 }
 
 .w-screen {
@@ -1097,6 +1084,11 @@ select {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-purple-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
 }
 
 .bg-gray-50 {

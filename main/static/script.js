@@ -113,3 +113,16 @@ function updatecolorpicker(){
 function formatdate_time(date_time){
     $("#id_time")[0].value = date_time.split(' ')[1]
 }
+function askPermission() {
+    return new Promise(function (resolve, reject) {
+      const permissionResult = Notification.requestPermission(function (result) {
+        resolve(result);
+      });  
+      if (permissionResult) {
+        permissionResult.then(resolve, reject);
+      }
+    }).then(function (permissionResult) {
+      if (permissionResult !== 'granted') {
+      }
+    });
+}

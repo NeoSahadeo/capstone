@@ -76,7 +76,6 @@ class ShowtasksmonthlyView(UnicornView):
         self.init_value = self.value
 
     def updated(self, name, value):
-        print(name,value)
         if int(value) == monthIndex and name == 'value':
             ShowtasksmonthlyView.setSimilar(self, value=today.day)
             ShowtasksmonthlyView.monthupdate(self, today.day)
@@ -110,5 +109,5 @@ class ShowtasksmonthlyView(UnicornView):
         value = kwargs['value']
         daytasks = WeeklyTask.objects.filter(user_id=self.request.user.id, date_time__day=int(value), date_time__month=int(self.value)+1, date_time__year=today.year).order_by('-date_time').values()
         self.daytasks = daytasks
-        self.currentDay = f'{self.current} - {value}'
+        self.currentDay = f'{odaylookup[date(today.year, int(self.value)+1, int(value)).weekday()]} {value} {self.current}'
         self.icurrentDay = int(value)

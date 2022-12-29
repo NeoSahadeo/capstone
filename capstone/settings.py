@@ -26,8 +26,7 @@ SECRET_KEY = 'django-insecure--vc3e&z)nb+rz^6*twhd1^%4r(4+!xp)(m^+(8^be80*es)b4r
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Theme for tailwind
 TAILWIND_APP_NAME = 'theme'
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'tailwind',
     'theme',
+    'webpush',
     'django_unicorn',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -140,9 +140,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Windows Default NPM executalbe path
+# Windows Default NPM executable path
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
 # Media Paths
 MEDIA_URL = '/media/'
 MEDIA_ROOT= os.path.join(BASE_DIR,'media/')
+
+# Webpush VAPID settings
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BJLDvAyenVpJE59jrJAGbl3M0DL7-Uh8aOrbd5a18PyGXFJBsTkOF3bYWzWJcb5Mpm543aAiLjLNrppqZIHQ2qg",
+    "VAPID_PRIVATE_KEY":"5s18ipDkSIeekVtUuA_VBedEGisbdtXzzRA6f_1YGbI",
+    "VAPID_ADMIN_EMAIL": "admin@example.com"
+}

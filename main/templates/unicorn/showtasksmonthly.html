@@ -3,7 +3,7 @@
     <div id="content" class="flex flex-col" class="pb-12">
         {% unicorn_scripts %}
         <input id="task_id" value="" unicorn:key="task_id" unicorn:model="task_id" hidden/>
-        <input id="month_id" value=" {{ value }} " hidden/>
+        <input id="month_id" value="{{ value }}" hidden/>
         <input id="icurrentDay_storage" hidden/>
         <input id="icurrentDay" value="" unicorn:key="icurrentDay" unicorn:model="icurrentDay" hidden/>
         <div id="currentContentHeader" class="max-w-min text-white text-2xl mx-auto" style="padding: 30px;">{{ current }}</div>
