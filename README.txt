@@ -1,4 +1,4 @@
-#_-Capstone-_
+_-Capstone-_
 ________________
 | Readme KEY    |
 | Category 🟡   |
@@ -101,6 +101,7 @@ ________________
     
     ⚫Setting Up Git
         Depending on the operating system, setting up Git will vary.
+        
         A link to Git page setup:
         https://git-scm.com/downloads
     
@@ -108,6 +109,7 @@ ________________
         In order to clone a repository, you will have to create and login to your 
         GitHub account. As of writing this GitHub requires you to create an 
         authorisation token.
+        
         A link to authorisation token creation:
         https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
@@ -115,6 +117,7 @@ ________________
         Depending on the operating system, you're installation will vary. On window
         machines that run windows 10 or above, you can download python from the
         windows store. For my application I am using 3.11.1
+        
         A link to the Python download page:
         https://www.python.org/downloads/
     
@@ -123,9 +126,44 @@ ________________
         I would recommened that you setup the virtual enviroment.
         Python comes with VENV installed.
         Running this command will create a virtual enviroment:
-        python3 -m venv /path/to/new/virtual/environment
+            $python3 -m venv /path/to/new/virtual/environment
+        
+        After the install, start the enviroment. This depends on the install. This
+        is a general location. 
+        Windows:
+            $yourinstall\Scripts\activate
+        
+        Linux and MacOS:
+            $source yourinstall\bin\activate
+
+        To know that is worked, the name of the install folder for VENV will be at
+        the beginning of the terminal line.
+
         A link to virtual enviroment python page:
         https://docs.python.org/3/library/venv.html
     
-    ⚫
+    ⚫Installing all the dependencies
+        ⚫Django installation, run this command:
+            Windows:
+                $py -m pip install Django
+
+            Linux and MacOS:
+                $python -m pip install Django
+
+            A link to Django installtion guide:
+            https://docs.djangoproject.com/en/4.1/topics/install/
+
+        ⚫Tailwind installation, run this command:
+            $python -m pip install django-tailwind
+
+            A link to Tailwind installation guide:
+            https://django-tailwind.readthedocs.io/en/latest/installation.html
+
+        ⚫Psycopg2 installaton, run this command:
+            $pip install psycopg2-binary
+
+            A link to psycopg2:
+            https://pypi.org/project/psycopg2/
+    
+    ⚫Running Everthing
     
