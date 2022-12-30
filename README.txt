@@ -1,4 +1,4 @@
-_-Capstone-_
+#_-Capstone-_
 ________________
 | Readme KEY    |
 | Category 🟡   |
@@ -123,9 +123,7 @@ ________________
         I would recommened that you setup the virtual enviroment.
         Python comes with VENV installed.
         Running this command will create a virtual enviroment:
-        ```
         python3 -m venv /path/to/new/virtual/environment
-        ```
         A link to virtual enviroment python page:
         https://docs.python.org/3/library/venv.html
     
