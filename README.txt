@@ -60,6 +60,7 @@ ________________
         o-> Javascript, Jquery
         o-> Django-Unicorn
         o-> Django-Webpush
+        o-> POSTGRESQL
         -Why Django?
             Django is a requirement for the CS50 course, and for this 
             projects backend.
@@ -94,6 +95,11 @@ ________________
             on tasks you have queued. It however does not work on mobile, given
             the time contraint I have decided not to include this feature on mobile
             devices. It only works on desktop browsers.
+        -Why PostgreSQL
+            For my application I wanted to implement an industry level database 
+            management system. I did not know excalty what my database structure
+            would look like when starting the project, and SQLite3 does not allow
+            for an array model. PostgreSQL does support Array fields for my database.
 
 🔴Install instructions
     I will do my best to have a one stop shop instruction list, however it may not
@@ -153,17 +159,78 @@ ________________
             A link to Django installtion guide:
             https://docs.djangoproject.com/en/4.1/topics/install/
 
-        ⚫Tailwind installation, run this command:
-            $python -m pip install django-tailwind
-
-            A link to Tailwind installation guide:
-            https://django-tailwind.readthedocs.io/en/latest/installation.html
-
         ⚫Psycopg2 installaton, run this command:
             $pip install psycopg2-binary
 
             A link to psycopg2:
             https://pypi.org/project/psycopg2/
-    
+
+        ⚫Webpush installaton, run this command:
+            $pip install django-webpush
+
+            A link to Django-Webpush:
+            https://github.com/safwanrahman/django-webpush
+        
+        ⚫Six installaton, run this command:
+            $pip install six:
+
+            A link to six:
+            https://pypi.org/project/six/
+            
+        ⚫Django-Unicorn installaton, run this command:
+            $pip install django-unicorn
+
+            A link to Django-Unicorn:
+            https://www.django-unicorn.com/docs/installation/
+
+        ⚫Schedule installaton, run this command:
+            $pip install schedule
+
+            A link to schedule:
+            https://pypi.org/project/schedule/
+
+        ⚫Schedule installaton, run this command:
+            $pip install pillow
+
+            A link to pillow:
+            https://pypi.org/project/Pillow/
+
+        ⚫Install POSTGRES:
+            To install PostgreSQL you have to follow the following
+            tutorial.
+
+            Connecting to PostgreSQL on windows
+            https://linuxhint.com/connect-to-postgresql-database-command-line-windows/
+
+            Download Link for PostgreSQL:
+            https://www.postgresql.org/download/
+
+            Once connected to the PostgreSQL database, run these commands:
+
+            postgres=# CREATE DATABASE calendarapp;
+            postgres=# CREATE USER calendarappuser WITH PASSWORD 'password';
+            postgres=# ALTER ROLE calendarappuser SET client_encoding TO 'utf8';
+            postgres=# ALTER ROLE calendarappuser SET client_encoding TO 'utf8';
+            postgres=# ALTER ROLE calendarappuser SET default_transaction_isolation TO 'read committed';
+            postgres=# ALTER ROLE calendarappuser SET timezone TO 'UTC';
+            postgres=# GRANT ALL PRIVILEGES ON DATABASE calendarapp TO calendarappuser;
+            postgres=# \q
+
+            Django PostgreSQL install:
+            https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-django-application-on-ubuntu-20-04
+
     ⚫Running Everthing
-    
+        If you are on a windows machine you will need to go to captstone > settings.py
+        Uncomment `NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"` on line 144
+
+        Run:
+            $py manage.py tailwind start
+
+        After it has run a built
+
+
+Attributions
+clock plugin
+Jquery library
+https://github.com/adamghill/django-unicorn
+https://github.com/safwanrahman/django-webpush
