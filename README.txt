@@ -1,3 +1,6 @@
+#### Update from 17/08/2023
+> The project is not meant for production. Please don't use it in that way. `Best Regards, Neo Sahadeo`
+
 _-Capstone-_
 ________________
 | Readme KEY    |
